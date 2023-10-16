@@ -98,12 +98,16 @@ line-height: 2;">
         <!-- <P style="page-break-before: always"></P> -->
 
         <h4>Signature:</h4>
+
+        <input type="text" name="signature1" id="signature1" style="font-family: cursive;">
         
-        <button class="write">Write Electronic Signature</button>
+        <p><u>Date: <span id="currentDate"></span></u> </p>
+        
+        <!-- <button class="write">Write Electronic Signature</button>
 
         <div id="sig"></div>
         <p><span><a href="#" class="clear-button hidden">Clear</a></span><span><a href="#" class="done hidden" style="color: #000; margin-left: 250px;">Done</a></span></p>
-        <canvas height="150" width="550" class="signature-pad hidden"></canvas>
+        <canvas height="150" width="550" class="signature-pad hidden"></canvas> -->
 
 
 </form>
@@ -172,80 +176,85 @@ font-size: 40px;">Done</div>
     var doneButton = document.querySelector('.done')
     var style = document.createElement('style');
     var name = document.getElementById('name');
-    const sig = document.getElementById('sig');
-    const canvas = document.querySelector('canvas');
-    const form = document.querySelector('#form');
-    const clearButton = document.querySelector('.clear-button');
-    const write = document.querySelector('.write');
-    const ctx = canvas.getContext('2d');
-    let writingMode = false;
+    n =  new Date();
+    y = n.getFullYear();
+    m = n.getMonth() + 1;
+    d = n.getDate();
+    document.getElementById("currentDate").innerHTML = m + "/" + d + "/" + y;
+    // const sig = document.getElementById('sig');
+    // const canvas = document.querySelector('canvas');
+    // const form = document.querySelector('#form');
+    // const clearButton = document.querySelector('.clear-button');
+    // const write = document.querySelector('.write');
+    // const ctx = canvas.getContext('2d');
+    // let writingMode = false;
 
-    write.addEventListener('click', (event) => {
-        event.preventDefault()
-        canvas.classList.remove('hidden')
-        clearButton.classList.remove('hidden')
-        doneButton.classList.remove('hidden')
-        write.classList.add('hidden')
-        body.classList.add('overflow')
-    })
-    const clearPad = () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
+    // write.addEventListener('click', (event) => {
+    //     event.preventDefault()
+    //     canvas.classList.remove('hidden')
+    //     clearButton.classList.remove('hidden')
+    //     doneButton.classList.remove('hidden')
+    //     write.classList.add('hidden')
+    //     body.classList.add('overflow')
+    // })
+    // const clearPad = () => {
+    //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // }
 
-    doneButton.addEventListener('click', (event) => {
-        event.preventDefault();
-        body.classList.remove('overflow')
-        const imageURL = canvas.toDataURL();
-        const image = document.createElement('img');
-        image.src = imageURL;
-        image.height = canvas.height;
-        image.width = canvas.width;
-        image.style.display = 'block';
-        canvas.classList.add('hidden')
-        doneButton.classList.add('hidden')
-        clearButton.classList.add('hidden')
-        write.classList.remove('hidden')
-        while (sig.firstChild) {
-        sig.removeChild(sig.lastChild);
-        }
-            sig.appendChild(image);
-            clearPad();
-        })
+    // doneButton.addEventListener('click', (event) => {
+    //     event.preventDefault();
+    //     body.classList.remove('overflow')
+    //     const imageURL = canvas.toDataURL();
+    //     const image = document.createElement('img');
+    //     image.src = imageURL;
+    //     image.height = canvas.height;
+    //     image.width = canvas.width;
+    //     image.style.display = 'block';
+    //     canvas.classList.add('hidden')
+    //     doneButton.classList.add('hidden')
+    //     clearButton.classList.add('hidden')
+    //     write.classList.remove('hidden')
+    //     while (sig.firstChild) {
+    //     sig.removeChild(sig.lastChild);
+    //     }
+    //         sig.appendChild(image);
+    //         clearPad();
+    //     })
 
-    const getCursorPosition = (event) => {
-        positionX = event.clientX - event.target.getBoundingClientRect().x;
-        positionY = event.clientY - event.target.getBoundingClientRect().y;
-        return [positionX, positionY];
-    }
+    // const getCursorPosition = (event) => {
+    //     positionX = event.clientX - event.target.getBoundingClientRect().x;
+    //     positionY = event.clientY - event.target.getBoundingClientRect().y;
+    //     return [positionX, positionY];
+    // }
 
-    const handlePointerDown = (event) => {
-        writingMode = true;
-        ctx.beginPath();
-        const [positionX, positionY] = getCursorPosition(event);
-        ctx.moveTo(positionX, positionY);
-    }
-    const handlePointerUp = () => {
-        writingMode = false;
-    }
+    // const handlePointerDown = (event) => {
+    //     writingMode = true;
+    //     ctx.beginPath();
+    //     const [positionX, positionY] = getCursorPosition(event);
+    //     ctx.moveTo(positionX, positionY);
+    // }
+    // const handlePointerUp = () => {
+    //     writingMode = false;
+    // }
 
-    const handlePointerMove = (event) => {
-        if (!writingMode) return
-        const [positionX, positionY] = getCursorPosition(event);
-        ctx.lineTo(positionX, positionY);
-        ctx.stroke();
-    }
+    // const handlePointerMove = (event) => {
+    //     if (!writingMode) return
+    //     const [positionX, positionY] = getCursorPosition(event);
+    //     ctx.lineTo(positionX, positionY);
+    //     ctx.stroke();
+    // }
 
-    clearButton.addEventListener('click', (event) => {
-        event.preventDefault();
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    })
+    // clearButton.addEventListener('click', (event) => {
+    //     event.preventDefault();
+    //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // })
 
-    ctx.lineWidth = 2;
-    ctx.lineJoin = ctx.lineCap = 'round';
+    // ctx.lineWidth = 2;
+    // ctx.lineJoin = ctx.lineCap = 'round';
 
-    canvas.addEventListener('pointerdown', handlePointerDown, {passive: true});
-    canvas.addEventListener('pointerup', handlePointerUp, {passive: true});
-    canvas.addEventListener('pointermove', handlePointerMove, {passive: true});
+    // canvas.addEventListener('pointerdown', handlePointerDown, {passive: true});
+    // canvas.addEventListener('pointerup', handlePointerUp, {passive: true});
+    // canvas.addEventListener('pointermove', handlePointerMove, {passive: true});
 
     ok.addEventListener('click', async function(event){      
         event.preventDefault()
